@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  criar os recursos da lambda que faz a conexão com o dynamodb
+
+Globals:
+  Api:
+    TracingEnabled: true
+Resources:
+  KeystrokeLevelModelDatabaseRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: KeystrokeLevelModelInsertionDatabaseRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+      Policies:
+        - PolicyName: KeystrokeLevelModelRoleDynamodb
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:BatchGetItem
+                Resource: arn:aws:dynamodb:us-east-1:471112707323:table/KeystrokeLevelModel
+
+  KeystrokeLevelModelDatabase:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: KeystrokeLevelModelQueryDatabaseFunction
+      CodeUri: KeystrokeLevelModelQueryDatabase
+      Handler: com.keystrokelevelmodelquerydatabase.KeystrokeLevelModelDatabaseApplication::handleRequest
+      Runtime: java17
+      Architectures:
+        - x86_64
+      MemorySize: 1000
+      Environment:
+        Variables:
+          DATABASE_NAME: KeystrokeLevelModel
+          LAMBDA_ENVIRONMENT: PROD
+      Timeout: 60
+      Tracing: Active
+      Role: !GetAtt KeystrokeLevelModelDatabaseRole.Arn
