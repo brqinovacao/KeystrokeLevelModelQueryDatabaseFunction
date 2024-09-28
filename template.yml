@@ -28,8 +28,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - dynamodb:BatchGetItem
-                  - dynamodb:GetItem
+                  - dynamodb:Query
                 Resource: arn:aws:dynamodb:us-east-1:471112707323:table/KeystrokeLevelModel
 
   KeystrokeLevelModelQueryDatabase:
