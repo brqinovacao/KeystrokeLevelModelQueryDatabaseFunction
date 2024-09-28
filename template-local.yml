@@ -20,7 +20,8 @@ Resources:
       Environment:
         Variables:
           DATABASE_NAME: KeystrokeLevelModel
-          LAMBDA_ENVIRONMENT: PROD
+          LAMBDA_ENVIRONMENT: LOCAL
+          DYNAMODB_ENDPOINT: http://dynamodb-local:8000
       Timeout: 60
       Tracing: Active
       Role: !GetAtt KeystrokeLevelModelDatabaseRole.Arn
