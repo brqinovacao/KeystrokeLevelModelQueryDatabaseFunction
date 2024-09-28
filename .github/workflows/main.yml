@@ -1,0 +1,58 @@
+name: 'Deploy lambda app'
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    if: github.event.pull_request.merged == true
+    name: 'Deploy lamda KeystrokeLevelModelQueryDatabase'
+    runs-on: ubuntu-latest
+    environment: develop
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 18.x
+
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: "temurin"
+
+      - name: "Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: "Configure AWS SAM"
+        uses: aws-actions/setup-sam@v1
+
+      - name: "AWS SAM Validate"
+        run: sam validate
+
+      - name: "AWS SAM Build"
+        run: sam build
+
+      - name: "AWS SAM Deploy"
+        run: sam deploy --no-confirm-changeset
