@@ -7,10 +7,10 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
-  KeystrokeLevelModelDatabaseRole:
+  KeystrokeLevelModelQueryDatabaseRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: KeystrokeLevelModelInsertionDatabaseRole
+      RoleName: KeystrokeLevelModelQueryDatabaseRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -32,7 +32,7 @@ Resources:
                   - dynamodb:GetItem
                 Resource: arn:aws:dynamodb:us-east-1:471112707323:table/KeystrokeLevelModel
 
-  KeystrokeLevelModelDatabase:
+  KeystrokeLevelModelQueryDatabase:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: KeystrokeLevelModelQueryDatabaseFunction
@@ -48,4 +48,4 @@ Resources:
           LAMBDA_ENVIRONMENT: PROD
       Timeout: 60
       Tracing: Active
-      Role: !GetAtt KeystrokeLevelModelDatabaseRole.Arn
+      Role: !GetAtt KeystrokeLevelModelQueryDatabaseRole.Arn
