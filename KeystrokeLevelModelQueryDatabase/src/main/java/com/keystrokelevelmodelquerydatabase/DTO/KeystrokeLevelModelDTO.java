@@ -1,6 +1,6 @@
 package com.keystrokelevelmodelquerydatabase.DTO;
 
-import com.keystrokelevelmodeldatabase.domain.KeystrokeLevelModel;
+import com.keystrokelevelmodelquerydatabase.domain.KeystrokeLevelModel;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 import java.util.List;

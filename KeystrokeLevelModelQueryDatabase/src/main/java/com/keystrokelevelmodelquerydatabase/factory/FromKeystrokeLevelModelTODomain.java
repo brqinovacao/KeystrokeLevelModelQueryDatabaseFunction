@@ -2,6 +2,8 @@ package com.keystrokelevelmodelquerydatabase.factory;
 
 import com.keystrokelevelmodelquerydatabase.DTO.*;
 import com.keystrokelevelmodelquerydatabase.domain.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public record FromKeystrokeLevelModelTODomain() {
@@ -12,7 +14,7 @@ public record FromKeystrokeLevelModelTODomain() {
         klm.getIndex(),
         toWord(klm.getWordsDTO()),
         toImage(klm.getImageDTO(), klm.getFilename()),
-        klm.getIgnoreWordsDTO().stream().map(String::new).toList(),
+        klm.getIgnoreWordsDTO() != null ? klm.getIgnoreWordsDTO().stream().map(String::new).toList() : new ArrayList<>(),
         toCalculateMeta(klm.getCalculateMetaDTO()),
         toCalculateCount(klm.getCalculateCountDTO()),
         new User(klm.getUserId(), klm.getUsername()),
