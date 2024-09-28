@@ -18,8 +18,6 @@ import java.util.logging.Logger;
 
 public class KeystrokeLevelModelQueryDatabaseApplication implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-  private final Logger logger = Logger.getAnonymousLogger();
-
   private final APIGatewayProxyResponseEvent responseEvent =
     new APIGatewayProxyResponseEvent()
       .withHeaders(Response.header());
@@ -32,16 +30,13 @@ public class KeystrokeLevelModelQueryDatabaseApplication implements RequestHandl
   @Override
   public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
 
-    logger.info("Iniciando consulta no banco");
-
-    //var keystrokeLevelModelQuery = new KeystrokeLevelModelQuery(dynamoDbRepository);
-    //var item = keystrokeLevelModelQuery.findAllKeystrokeLevelModels(UUID.fromString("0167ac40-da6e-4dd2-8507-033324a021dc"));
+    var keystrokeLevelModelQuery = new KeystrokeLevelModelQuery(dynamoDbRepository);
+    var result = keystrokeLevelModelQuery.findAllKeystrokeLevelModels(UUID.fromString(input.getPathParameters().get("userId")));
 
     try {
-      logger.info(objectMapper.writeValueAsString(input));
       return responseEvent
         .withStatusCode(200)
-        .withBody(objectMapper.writeValueAsString("SUCESSO"));
+        .withBody(objectMapper.writeValueAsString(result));
     } catch (Exception ex) {
       throw new InternalException(ex.getMessage());
     }

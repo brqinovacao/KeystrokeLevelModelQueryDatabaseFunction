@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "resource": "/KeystrokeLevelModelQueryDatabaseFunction/{userId}",
+  "path": "/dev/KeystrokeLevelModelQueryDatabaseFunction/0167ac40-da6e-4dd2-8507-033324a021dc",
+  "httpMethod": "GET",
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "userId": "0167ac40-da6e-4dd2-8507-033324a021dc"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "accountId": "471112707323",
+    "stage": "dev",
+    "resourceId": "GET /KeystrokeLevelModelQueryDatabaseFunction/{userId}",
+    "requestId": "e1lOghaaoAMEbqg=",
+    "operationName": null,
+    "resourcePath": "/KeystrokeLevelModelQueryDatabaseFunction/{userId}",
+    "httpMethod": "GET",
+    "apiId": "o5cpljqoeg",
+    "path": "/dev/KeystrokeLevelModelQueryDatabaseFunction/0167ac40-da6e-4dd2-8507-033324a021dc",
+    "authorizer": null
+  },
+  "body": null,
+  "isBase64Encoded": false
+}
